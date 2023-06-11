@@ -13,6 +13,7 @@ public class ItemController {
 
     private final ItemService itemService;
     private static final String header = "X-Sharer-User-Id";
+
     @PostMapping
     public Item addItem(@RequestBody Item item, @RequestHeader(header) Long userId) {
         return itemService.addItem(item, userId);
