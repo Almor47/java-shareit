@@ -62,7 +62,7 @@ public class ItemStorageImpl implements ItemStorage {
     }
 
     private boolean filterForSearch(Item item,String textMod) {
-        if(!item.getAvailable()) {
+        if (!item.getAvailable()) {
             return false;
         }
         return item.getDescription().toLowerCase().contains(textMod) ||
