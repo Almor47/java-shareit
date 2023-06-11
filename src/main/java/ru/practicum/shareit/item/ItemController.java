@@ -6,23 +6,20 @@ import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/items")
 public class ItemController {
 
     private final ItemService itemService;
-
+    private static final String header = "X-Sharer-User-Id";
     @PostMapping
-    public Item addItem(@RequestBody Item item, @RequestHeader("X-Sharer-User-Id") Long userId) {
+    public Item addItem(@RequestBody Item item, @RequestHeader(header) Long userId) {
         return itemService.addItem(item, userId);
     }
 
     @PatchMapping("/{itemId}")
-    public Item updateItem(@RequestBody Item item, @RequestHeader("X-Sharer-User-Id") Long userId,
+    public Item updateItem(@RequestBody Item item, @RequestHeader(header) Long userId,
                            @PathVariable Long itemId) {
         return itemService.updateItem(item, userId, itemId);
     }
@@ -33,7 +30,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<Item> getUserItem(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public List<Item> getUserItem(@RequestHeader(header) Long userId) {
         return itemService.getUserItem(userId);
     }
 

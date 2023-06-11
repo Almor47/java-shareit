@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @Component
 public class ItemStorageImpl implements ItemStorage {
 
-    HashMap<Long, Item> itemMap = new HashMap<>();
+    private final HashMap<Long, Item> itemMap = new HashMap<>();
     long countItem = 1;
 
 
@@ -57,9 +57,16 @@ public class ItemStorageImpl implements ItemStorage {
         String textMod = text.toLowerCase();
         return itemMap.values()
                 .stream()
-                .filter(x -> x.getAvailable() && (x.getDescription().toLowerCase().contains(textMod) ||
-                        x.getName().toLowerCase().contains(textMod)))
+                .filter(x -> filterForSearch(x,textMod))
                 .collect(Collectors.toList());
+    }
+
+    private boolean filterForSearch(Item item,String textMod) {
+        if(!item.getAvailable()) {
+            return false;
+        }
+        return item.getDescription().toLowerCase().contains(textMod) ||
+                item.getName().toLowerCase().contains(textMod);
     }
 
 

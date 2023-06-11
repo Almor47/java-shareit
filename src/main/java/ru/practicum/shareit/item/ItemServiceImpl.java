@@ -22,7 +22,7 @@ public class ItemServiceImpl implements ItemService {
         if (userId == null) {
             throw new UserNotFoundException("У предмета отсутствует пользователь");
         } else if (userStorage.getUserById(userId) == null) {
-            throw new UserNotFoundException("Пользователя с таким айди " + userId + " не существует");
+            throw new UserNotFoundException("Пользователя с таким id " + userId + " не существует");
         } else if (item.getAvailable() == null) {
             throw new BadRequestItemException("У предмета отсутствует доступность");
         } else if (item.getName() == null || item.getName().isEmpty()) {
@@ -40,11 +40,11 @@ public class ItemServiceImpl implements ItemService {
         }
         User user = userStorage.getUserById(userId);
         if (user == null) {
-            throw new UserNotFoundException("Пользователь с айди " + userId + " не найден");
+            throw new UserNotFoundException("Пользователь с id " + userId + " не найден");
         }
         long owner = itemStorage.getItemById(itemId).getOwner();
         if (owner != userId) {
-            throw new UserNotFoundException("Пользователь с айди " + userId + " не является владельцем вещи");
+            throw new UserNotFoundException("Пользователь с id " + userId + " не является владельцем вещи");
         }
         return itemStorage.updateItem(item, userId, itemId);
     }

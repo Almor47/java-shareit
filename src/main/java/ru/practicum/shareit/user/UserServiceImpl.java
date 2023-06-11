@@ -22,10 +22,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(long userId, User user) {
-        if (user.getEmail() != null) {
-            if (!getUserById(userId).getEmail().equals(user.getEmail())) {
-                checkDuplicateEmail(user);
-            }
+        if (user.getEmail() != null && !getUserById(userId).getEmail().equals(user.getEmail())) {
+            checkDuplicateEmail(user);
         }
         return userStorage.updateUser(userId, user);
     }
