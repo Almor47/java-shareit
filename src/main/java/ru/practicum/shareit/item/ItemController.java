@@ -12,15 +12,15 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-    private static final String header = "X-Sharer-User-Id";
+    private static final String HEADER = "X-Sharer-User-Id";
 
     @PostMapping
-    public Item addItem(@RequestBody Item item, @RequestHeader(header) Long userId) {
+    public Item addItem(@RequestBody Item item, @RequestHeader(HEADER) Long userId) {
         return itemService.addItem(item, userId);
     }
 
     @PatchMapping("/{itemId}")
-    public Item updateItem(@RequestBody Item item, @RequestHeader(header) Long userId,
+    public Item updateItem(@RequestBody Item item, @RequestHeader(HEADER) Long userId,
                            @PathVariable Long itemId) {
         return itemService.updateItem(item, userId, itemId);
     }
@@ -31,7 +31,7 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<Item> getUserItem(@RequestHeader(header) Long userId) {
+    public List<Item> getUserItem(@RequestHeader(HEADER) Long userId) {
         return itemService.getUserItem(userId);
     }
 
