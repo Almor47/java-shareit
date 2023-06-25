@@ -1,9 +1,12 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import ru.practicum.shareit.user.exception.EmailUserException;
+import ru.practicum.shareit.user.exception.UserNotFoundException;
+import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.repository.UserRepository;
 
 import java.util.List;
 
@@ -20,16 +23,24 @@ public class UserServiceImpl implements UserService {
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new EmailUserException("У пользователя пустая почта");
         }
-        checkDuplicateEmail(user);
+        /*checkDuplicateEmail(user);*/
         return userRepository.save(user);
     }
     @Transactional
     @Override
     public User updateUser(long userId, User user) {
-        if (user.getEmail() != null && !getUserById(userId).getEmail().equals(user.getEmail())) {
+        /*if (user.getEmail() != null && !getUserById(userId).getEmail().equals(user.getEmail())) {
             checkDuplicateEmail(user);
+        }*/
+        User userDb = getUserById(userId);
+        if (user.getEmail() != null) {
+            userDb.setEmail(user.getEmail());
         }
-        return userRepository.save(user);
+        if (user.getName() != null) {
+            userDb.setName(user.getName());
+        }
+
+        return userRepository.save(userDb);
     }
 
     @Override
@@ -50,11 +61,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private void checkDuplicateEmail(User user) {
+    /*private void checkDuplicateEmail(User user) {
         for (User oneUser : getAllUser()) {
             if (oneUser.getEmail().equals(user.getEmail())) {
                 throw new SameEmailException("Пользователь на данную почту зарегестрирован");
             }
         }
-    }
+    }*/
 }

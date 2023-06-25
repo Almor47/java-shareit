@@ -1,8 +1,10 @@
-package ru.practicum.shareit.item;
+package ru.practicum.shareit.item.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.service.ItemService;
 
 import java.util.List;
 
@@ -26,12 +28,12 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public Item getItemById(@PathVariable Long itemId) {
-        return itemService.getItemById(itemId);
+    public ItemDto getItemById(@PathVariable Long itemId, @RequestHeader(HEADER) Long userId) {
+        return itemService.getItemById(itemId, userId);
     }
 
     @GetMapping
-    public List<Item> getUserItem(@RequestHeader(HEADER) Long userId) {
+    public List<ItemDto> getUserItem(@RequestHeader(HEADER) Long userId) {
         return itemService.getUserItem(userId);
     }
 
@@ -39,4 +41,6 @@ public class ItemController {
     public List<Item> searchItem(@RequestParam String text) {
         return itemService.searchItem(text);
     }
+
+
 }
