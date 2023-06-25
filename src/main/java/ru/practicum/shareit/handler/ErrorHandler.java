@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.booking.exception.BadRequestBookingException;
 import ru.practicum.shareit.booking.exception.BookingNotFoundException;
 import ru.practicum.shareit.booking.exception.WrongState;
+import ru.practicum.shareit.item.exception.BadRequestComment;
 import ru.practicum.shareit.item.exception.BadRequestItemException;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.exception.UpdateWithoutXSharerException;
@@ -70,5 +71,11 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleWrongState(WrongState e) {
         return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBadRequestComment(BadRequestComment e) {
+        return e.getMessage();
     }
 }

@@ -48,5 +48,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "ORDER BY b.start ASC")
     List<Booking> findNextBooking(Long itemId, LocalDateTime ldt);
 
+    List<Booking> findAllByBookerIdAndItemIdAndStatusAndEndBefore(Long userId, Long itemId,
+                                                                  Status status, LocalDateTime ldt);
+
 
 }

@@ -23,15 +23,12 @@ public class UserServiceImpl implements UserService {
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new EmailUserException("У пользователя пустая почта");
         }
-        /*checkDuplicateEmail(user);*/
         return userRepository.save(user);
     }
+
     @Transactional
     @Override
     public User updateUser(long userId, User user) {
-        /*if (user.getEmail() != null && !getUserById(userId).getEmail().equals(user.getEmail())) {
-            checkDuplicateEmail(user);
-        }*/
         User userDb = getUserById(userId);
         if (user.getEmail() != null) {
             userDb.setEmail(user.getEmail());
@@ -53,6 +50,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
+
     @Transactional
     @Override
     public User deleteUserById(long userId) {
@@ -61,11 +59,4 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    /*private void checkDuplicateEmail(User user) {
-        for (User oneUser : getAllUser()) {
-            if (oneUser.getEmail().equals(user.getEmail())) {
-                throw new SameEmailException("Пользователь на данную почту зарегестрирован");
-            }
-        }
-    }*/
 }

@@ -39,10 +39,6 @@ public class Item {
     @JsonIgnore
     private User user;
 
-    //@OneToMany()
-    //@Column(name = "request_id")
-    //private ItemRequest request;
-
     public Item(long id, String name, String description, Boolean available, long owner) {
         this.id = id;
         this.name = name;
