@@ -22,6 +22,7 @@ import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -94,7 +95,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = getBooking(bookingId);
         Item item = itemService.getItemByIdRepository(booking.getItemId());
         User user = userService.getUserById(booking.getBookerId());
-        if (booking.getBookerId() != userId) {
+        if (!Objects.equals(booking.getBookerId(), userId)) {
             if (item.getUser().getId() != userId) {
                 throw new UserNotFoundException("Пользователя с id " + userId + "не найден");
             }
