@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.booking.exception.BadRequestBookingException;
 import ru.practicum.shareit.booking.exception.BookingNotFoundException;
-import ru.practicum.shareit.booking.exception.WrongState;
+import ru.practicum.shareit.booking.exception.WrongStateException;
 import ru.practicum.shareit.item.exception.BadRequestComment;
 import ru.practicum.shareit.item.exception.BadRequestItemException;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
@@ -69,7 +69,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleWrongState(WrongState e) {
+    public ErrorResponse handleWrongState(WrongStateException e) {
         return new ErrorResponse(e.getMessage());
     }
 

@@ -11,7 +11,7 @@ import ru.practicum.shareit.booking.enumerated.State;
 import ru.practicum.shareit.booking.enumerated.Status;
 import ru.practicum.shareit.booking.exception.BadRequestBookingException;
 import ru.practicum.shareit.booking.exception.BookingNotFoundException;
-import ru.practicum.shareit.booking.exception.WrongState;
+import ru.practicum.shareit.booking.exception.WrongStateException;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -107,48 +107,42 @@ public class BookingServiceImpl implements BookingService {
     public List<FullBookingDto> getAllUserBooking(String state, Long userId) {
         User user = userService.getUserById(userId);
         Sort rule = Sort.by(Sort.Direction.DESC, "start");
-        if (state.equals(State.ALL.name())) {
+        if (State.ALL.name().equals(state)) {
             return bookingRepository.findAllByBookerId(userId, rule)
                     .stream()
-                    .map(booking -> BookingMapper.mapToFullBooking(booking, user,
-                            itemService.getItemByIdRepository(booking.getItemId())))
+                    .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else if (state.equals(State.CURRENT.name())) {
+        } else if (State.CURRENT.name().equals(state)) {
             return bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(),
                             LocalDateTime.now(),
                             Sort.by(Sort.Direction.ASC, "start"))
                     .stream()
-                    .map(booking -> BookingMapper.mapToFullBooking(booking, user,
-                            itemService.getItemByIdRepository(booking.getItemId())))
+                    .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else if (state.equals(State.PAST.name())) {
+        } else if (State.PAST.name().equals(state)) {
             return bookingRepository.findAllByBookerIdAndEndBefore(userId,
                             LocalDateTime.now(), rule)
                     .stream()
-                    .map(booking -> BookingMapper.mapToFullBooking(booking, user,
-                            itemService.getItemByIdRepository(booking.getItemId())))
+                    .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else if (state.equals(State.FUTURE.name())) {
+        } else if (State.FUTURE.name().equals(state)) {
             return bookingRepository.findAllByBookerIdAndStartAfter(userId,
                             LocalDateTime.now(), rule)
                     .stream()
-                    .map(booking -> BookingMapper.mapToFullBooking(booking, user,
-                            itemService.getItemByIdRepository(booking.getItemId())))
+                    .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else if (state.equals(State.WAITING.name())) {
+        } else if (State.WAITING.name().equals(state)) {
             return bookingRepository.findAllByBookerIdAndStatus(userId, Status.WAITING, rule)
                     .stream()
-                    .map(booking -> BookingMapper.mapToFullBooking(booking, user,
-                            itemService.getItemByIdRepository(booking.getItemId())))
+                    .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else if (state.equals(State.REJECTED.name())) {
+        } else if (State.REJECTED.name().equals(state)) {
             return bookingRepository.findAllByBookerIdAndStatus(userId, Status.REJECTED, rule)
                     .stream()
-                    .map(booking -> BookingMapper.mapToFullBooking(booking, user,
-                            itemService.getItemByIdRepository(booking.getItemId())))
+                    .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
         } else {
-            throw new WrongState(String.format("Unknown state: %s", state));
+            throw new WrongStateException(String.format("Unknown state: %s", state));
         }
 
     }
@@ -159,15 +153,14 @@ public class BookingServiceImpl implements BookingService {
         try {
             state = State.valueOf(states);
         } catch (IllegalArgumentException e) {
-            throw new WrongState(String.format("Unknown state: %s", states));
+            throw new WrongStateException(String.format("Unknown state: %s", states));
         }
         User user = userService.getUserById(userId);
         return bookingRepository.findAllByOwnerId(userId, String.valueOf(state),
                         LocalDateTime.now())
                 .stream()
                 .map(booking -> BookingMapper.mapToFullBooking(booking,
-                        userService.getUserById(booking.getBookerId()),
-                        itemService.getItemByIdRepository(booking.getItemId())))
+                        userService.getUserById(booking.getBookerId()), booking.getItem()))
                 .collect(Collectors.toList());
     }
 

@@ -65,7 +65,6 @@ public class ItemServiceImpl implements ItemService {
         if (user == null) {
             throw new UserNotFoundException("Пользователь с id " + userId + " не найден");
         }
-        //long owner = itemStorage.getItemById(itemId).getOwner();
         long owner = getItemByIdRepository(itemId).getOwner();
         if (owner != userId) {
             throw new UserNotFoundException("Пользователь с id " + userId + " не является владельцем вещи");
@@ -111,7 +110,6 @@ public class ItemServiceImpl implements ItemService {
             List<CommentDto> commentsDto = listCommentToListCommentDto(itemId);
             ans.add(ItemMapper.mapToItemDto(one, last, next, commentsDto));
         }
-        //return itemRepository.findAllByOwner(userId);
         return ans;
 
     }
@@ -153,8 +151,7 @@ public class ItemServiceImpl implements ItemService {
         List<Comment> comments = commentRepository.findAllByItemId(itemId);
         List<CommentDto> commentsDto = new ArrayList<>();
         for (Comment one : comments) {
-            User user = userService.getUserById(one.getAuthorId());
-            commentsDto.add(CommentMapper.commentToCommentDto(one, user));
+            commentsDto.add(CommentMapper.commentToCommentDto(one, one.getAuthor()));
         }
         return commentsDto;
     }

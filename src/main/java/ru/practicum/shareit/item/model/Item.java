@@ -39,14 +39,6 @@ public class Item {
     @JsonIgnore
     private User user;
 
-    public Item(long id, String name, String description, Boolean available, long owner) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.available = available;
-        this.owner = owner;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
