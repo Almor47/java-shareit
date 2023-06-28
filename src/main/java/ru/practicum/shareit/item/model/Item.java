@@ -5,6 +5,7 @@ import lombok.*;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * TODO Sprint add-controllers.
@@ -38,6 +39,11 @@ public class Item {
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
     @JsonIgnore
     private User user;
+
+    @OneToMany(targetEntity = Comment.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private List<Comment> comment;
 
     @Override
     public boolean equals(Object o) {

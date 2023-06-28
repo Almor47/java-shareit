@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.practicum.shareit.booking.enumerated.Status;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,6 +42,10 @@ public class Booking {
     private Item item;
     @Column(name = "booker_id")
     private Long bookerId;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "booker_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private User user;
 
     @Override
     public boolean equals(Object o) {

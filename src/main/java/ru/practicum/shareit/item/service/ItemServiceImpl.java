@@ -11,7 +11,7 @@ import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.CommentMapper;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
-import ru.practicum.shareit.item.exception.BadRequestComment;
+import ru.practicum.shareit.item.exception.BadRequestCommentException;
 import ru.practicum.shareit.item.exception.BadRequestItemException;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.exception.UpdateWithoutXSharerException;
@@ -25,7 +25,9 @@ import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -88,7 +90,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemDto getItemById(Long itemId, Long userId) {
         Item item = itemRepository.findById(itemId).orElseThrow(
                 () -> new ItemNotFoundException("Предмет с id " + itemId + "не найден"));
-        List<CommentDto> commentsDto = listCommentToListCommentDto(itemId);
+        List<CommentDto> commentsDto = listCommentToListCommentDto(item);
         if (item.getOwner() != userId) {
             return ItemMapper.mapToItemDto(item, null, null, commentsDto);
         }
@@ -102,12 +104,47 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> getUserItem(Long userId) {
 
         List<Item> itemList = itemRepository.findAllByOwner(userId);
+        List<Long> itemIdList = new ArrayList<>();
+        for (Item one : itemList) {
+            itemIdList.add(one.getId());
+        }
+        List<Booking> bookings = bookingRepository.findAllByItemIdInAndStatusNotOrderByStartAsc(itemIdList,
+                Status.REJECTED);
+        Map<Long, Booking> lastBookings = new HashMap<>();
+        LocalDateTime ldt = LocalDateTime.now();
+        for (Booking one : bookings) {
+            if (lastBookings.get(one.getItemId()) == null) {
+                if (one.getStart().isBefore(ldt)) {
+                    lastBookings.put(one.getItemId(), one);
+                } else {
+                    continue;
+                }
+            }
+            if (lastBookings.get(one.getItemId()).getStart().isBefore(one.getStart())
+                    && one.getStart().isBefore(ldt)) {
+                lastBookings.put(one.getItemId(), one);
+                System.out.println(lastBookings.get(one.getItemId()));
+            }
+        }
+        Map<Long, Booking> nextBookings = new HashMap<>();
+        for (Booking one : bookings) {
+            if (nextBookings.get(one.getItemId()) == null) {
+                if (one.getStart().isAfter(ldt)) {
+                    nextBookings.put(one.getItemId(), one);
+                } else {
+                    continue;
+                }
+            }
+            if (nextBookings.get(one.getItemId()).getStart().isAfter(one.getStart())
+                    && one.getStart().isAfter(ldt)) {
+                nextBookings.put(one.getItemId(), one);
+            }
+        }
         List<ItemDto> ans = new ArrayList<>();
         for (Item one : itemList) {
-            Long itemId = one.getId();
-            Booking last = bookingRepository.findLastBooking(itemId, LocalDateTime.now()).stream().findFirst().orElse(null);
-            Booking next = bookingRepository.findNextBooking(itemId, LocalDateTime.now()).stream().findFirst().orElse(null);
-            List<CommentDto> commentsDto = listCommentToListCommentDto(itemId);
+            Booking last = lastBookings.get(one.getId());
+            Booking next = nextBookings.get(one.getId());
+            List<CommentDto> commentsDto = listCommentToListCommentDto(one);
             ans.add(ItemMapper.mapToItemDto(one, last, next, commentsDto));
         }
         return ans;
@@ -131,7 +168,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public CommentDto addComment(Comment comment, Long userId, Long itemId) {
         if (comment.getText() == null || comment.getText().isEmpty()) {
-            throw new BadRequestComment("У комментария отсутсвует текст");
+            throw new BadRequestCommentException("У комментария отсутсвует текст");
         }
         LocalDateTime now = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findAllByBookerIdAndItemIdAndStatusAndEndBefore(userId, itemId,
@@ -147,8 +184,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
-    private List<CommentDto> listCommentToListCommentDto(Long itemId) {
-        List<Comment> comments = commentRepository.findAllByItemId(itemId);
+    private List<CommentDto> listCommentToListCommentDto(Item item) {
+        List<Comment> comments = item.getComment();
         List<CommentDto> commentsDto = new ArrayList<>();
         for (Comment one : comments) {
             commentsDto.add(CommentMapper.commentToCommentDto(one, one.getAuthor()));

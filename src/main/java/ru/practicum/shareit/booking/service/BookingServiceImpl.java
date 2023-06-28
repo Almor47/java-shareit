@@ -115,7 +115,7 @@ public class BookingServiceImpl implements BookingService {
         } else if (State.CURRENT.name().equals(state)) {
             return bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(),
                             LocalDateTime.now(),
-                            Sort.by(Sort.Direction.ASC, "start"))
+                            Sort.by(Sort.Direction.ASC, "item_id"))
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
@@ -160,7 +160,7 @@ public class BookingServiceImpl implements BookingService {
                         LocalDateTime.now())
                 .stream()
                 .map(booking -> BookingMapper.mapToFullBooking(booking,
-                        userService.getUserById(booking.getBookerId()), booking.getItem()))
+                        booking.getUser(), booking.getItem()))
                 .collect(Collectors.toList());
     }
 
