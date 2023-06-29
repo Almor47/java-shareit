@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item;
+package ru.practicum.shareit.item.exception;
 
 public class UpdateWithoutXSharerException extends RuntimeException {
 

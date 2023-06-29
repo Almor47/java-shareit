@@ -4,16 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.item.model.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
+
 @Getter
 @Setter
 @ToString
-public class ItemDto {
+public class FullItem {
 
     private long id;
 
@@ -29,6 +29,6 @@ public class ItemDto {
 
     private Booking nextBooking;
 
-    private List<CommentDto> comments;
+    private List<Comment> comments = new ArrayList<>();
 
 }
