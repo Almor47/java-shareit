@@ -12,10 +12,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * TODO Sprint add-bookings.
- */
-
 @Entity
 @Table(name = "bookings", schema = "public")
 @Getter

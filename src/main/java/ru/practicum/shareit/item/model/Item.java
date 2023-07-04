@@ -44,6 +44,8 @@ public class Item {
     @JoinColumn(name = "item_id", insertable = false, updatable = false)
     @JsonIgnore
     private List<Comment> comment;
+    @Column(name = "request_id")
+    private Long requestId;
 
     @Override
     public boolean equals(Object o) {

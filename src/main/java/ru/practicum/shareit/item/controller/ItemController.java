@@ -35,13 +35,17 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getUserItem(@RequestHeader(HEADER) Long userId) {
-        return itemService.getUserItem(userId);
+    public List<ItemDto> getUserItem(@RequestHeader(HEADER) Long userId,
+                                     @RequestParam(defaultValue = "0") Integer from,
+                                     @RequestParam(defaultValue = "32") Integer size) {
+        return itemService.getUserItem(userId,from,size);
     }
 
     @GetMapping("/search")
-    public List<Item> searchItem(@RequestParam String text) {
-        return itemService.searchItem(text);
+    public List<Item> searchItem(@RequestParam String text,
+                                 @RequestParam(defaultValue = "0") Integer from,
+                                 @RequestParam(defaultValue = "32") Integer size) {
+        return itemService.searchItem(text,from,size);
     }
 
     @PostMapping("/{itemId}/comment")

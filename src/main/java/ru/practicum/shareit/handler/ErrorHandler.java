@@ -11,6 +11,9 @@ import ru.practicum.shareit.item.exception.BadRequestCommentException;
 import ru.practicum.shareit.item.exception.BadRequestItemException;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.exception.UpdateWithoutXSharerException;
+import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
+import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
+import ru.practicum.shareit.request.exception.PaginationException;
 import ru.practicum.shareit.user.exception.EmailUserException;
 import ru.practicum.shareit.user.exception.SameEmailException;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
@@ -78,4 +81,24 @@ public class ErrorHandler {
     public String handleBadRequestComment(BadRequestCommentException e) {
         return e.getMessage();
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBadRequestItemRequestException(BadRequestItemRequestException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handlePaginationException(PaginationException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNotFoundItemRequestException(NotFoundItemRequestException e) {
+        return e.getMessage();
+    }
+
+
 }
