@@ -1,9 +1,7 @@
 package ru.practicum.shareit.booking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ru.practicum.shareit.booking.enumerated.Status;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
@@ -17,7 +15,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Booking {
 
     @Enumerated(EnumType.STRING)

@@ -49,7 +49,6 @@ public class UserControllerTest {
                 .getContentAsString();
 
         assertEquals(objectMapper.writeValueAsString(userToSave),response);
-        // ЭКВИВАЛЕНТ ЗАТЕСТИТЬ)
     }
 
     @SneakyThrows

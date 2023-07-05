@@ -60,4 +60,16 @@ public class UserServiceImplTest {
         verify(userRepository, never()).save(user);
 
     }
+
+    @Test
+    void addUser_whenEmailValid_thenSaveUser() {
+        User user = new User();
+        user.setEmail("test@yandex.ru");
+
+        when(userRepository.save(user)).thenReturn(user);
+
+        User actualUser = userService.addUser(user);
+
+        assertEquals(user, actualUser);
+    }
 }
