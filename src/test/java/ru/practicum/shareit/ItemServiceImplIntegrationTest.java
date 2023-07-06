@@ -39,15 +39,15 @@ public class ItemServiceImplIntegrationTest {
                 .name("Aleksandr")
                 .email("test@yandex.ru")
                 .build();
-        User saveUser = userRepository.save(userToSave);
+        entityManager.persist(userToSave);
 
         Item itemToSave = Item.builder()
                 .name("сундук")
                 .description("классный сундук")
                 .available(true)
-                .owner(saveUser.getId())
+                .owner(userToSave.getId())
                 .build();
-        itemService.addItem(itemToSave, saveUser.getId());
+        itemService.addItem(itemToSave, userToSave.getId());
 
         val query = entityManager.createQuery(
                 "select i from Item i where i.name = :name", Item.class);
@@ -60,4 +60,40 @@ public class ItemServiceImplIntegrationTest {
         assertThat(item.getOwner(),equalTo(itemToSave.getOwner()));
 
     }
+
+    @Test
+    void updateItem() {
+        User userToSave = User.builder()
+                .name("Aleksandr")
+                .email("test@yandex.ru")
+                .build();
+        entityManager.persist(userToSave);
+
+        Item itemToSave = Item.builder()
+                .name("сундук")
+                .description("классный сундук")
+                .available(true)
+                .owner(userToSave.getId())
+                .build();
+        entityManager.persist(itemToSave);
+
+        Item itemToUpdate = Item.builder()
+                .name("сундук")
+                .description("классный сундук с прочной ручкой")
+                .available(true)
+                .owner(userToSave.getId())
+                .build();
+
+        Item targetItem = itemService.updateItem(itemToUpdate,
+                userToSave.getId(), itemToSave.getId());
+
+        assertThat(targetItem.getId(), equalTo(itemToSave.getId()));
+        assertThat(targetItem.getName(), equalTo(itemToSave.getName()));
+        assertThat(targetItem.getDescription(), equalTo(itemToUpdate.getDescription()));
+        assertThat(targetItem.getAvailable(), equalTo(itemToSave.getAvailable()));
+        assertThat(targetItem.getOwner(), equalTo(itemToSave.getOwner()));
+    }
+
+
+
 }
