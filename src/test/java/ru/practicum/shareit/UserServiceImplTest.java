@@ -36,8 +36,7 @@ public class UserServiceImplTest {
 
         assertEquals(expectedUser, actualUser);
 
-    }пше
-
+    }
     @Test
     void getUserById_whenUserNotFound_thenReturnNotFoundException() {
         long userId = 0L;
