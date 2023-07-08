@@ -6,12 +6,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.shareit.booking.enumerated.Status;
+import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemServiceImpl;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,6 +151,31 @@ public class ItemServiceImplIntegrationTest {
                 .build();
         entityManager.persist(itemToSave2);
 
+        User userToSave2 = User.builder()
+                .name("Oleg")
+                .email("oleg@yandex.ru")
+                .build();
+        entityManager.persist(userToSave2);
+
+        Booking booking1 = Booking.builder()
+                .start(LocalDateTime.of(2022, 10, 10, 2, 2))
+                .end(LocalDateTime.of(2022, 11, 11, 3, 3))
+                .itemId(itemToSave1.getId())
+                .bookerId(userToSave2.getId())
+                .status(Status.APPROVED)
+                .build();
+        entityManager.persist(booking1);
+
+        Booking booking2 = Booking.builder()
+                .start(LocalDateTime.of(2024, 10, 10, 2, 2))
+                .end(LocalDateTime.of(2024, 11, 11, 3, 3))
+                .itemId(itemToSave1.getId())
+                .bookerId(userToSave2.getId())
+                .status(Status.APPROVED)
+                .build();
+        entityManager.persist(booking2);
+
+
         List<ItemDto> itemsDto = itemService.getUserItem(userToSave.getId(), 0, 32);
 
         assertThat(itemsDto.size(), equalTo(2));
@@ -204,6 +234,50 @@ public class ItemServiceImplIntegrationTest {
 
         Item targetItem = itemService.getItemByIdRepository(itemToSave1.getId());
         assertThat(targetItem, equalTo(itemToSave1));
+    }
+
+    @Test
+    void addComment() {
+        User userToSave = User.builder()
+                .name("Aleksandr")
+                .email("test@yandex.ru")
+                .build();
+        entityManager.persist(userToSave);
+
+        User userToSave2 = User.builder()
+                .name("Oleg")
+                .email("oleg@yandex.ru")
+                .build();
+        entityManager.persist(userToSave2);
+
+        Item itemToSave1 = Item.builder()
+                .name("сундук")
+                .description("классный сундук")
+                .available(true)
+                .owner(userToSave.getId())
+                .build();
+        entityManager.persist(itemToSave1);
+
+        Comment comment = Comment.builder().text("Новый комментарий")
+                .itemId(itemToSave1.getId())
+                .authorId(userToSave.getId())
+                .created(LocalDateTime.now()).build();
+
+        Booking booking1 = Booking.builder()
+                .start(LocalDateTime.of(2022, 5, 10, 2, 2))
+                .end(LocalDateTime.of(2022, 5, 11, 3, 3))
+                .itemId(itemToSave1.getId())
+                .bookerId(userToSave2.getId())
+                .status(Status.APPROVED)
+                .build();
+        entityManager.persist(booking1);
+
+
+        CommentDto targetComment = itemService.addComment(comment,userToSave2.getId(),itemToSave1.getId());
+
+        assertThat(targetComment.getText(),equalTo(comment.getText()));
+
+
     }
 
 

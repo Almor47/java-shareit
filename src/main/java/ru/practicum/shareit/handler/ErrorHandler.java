@@ -15,7 +15,6 @@ import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
 import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
 import ru.practicum.shareit.request.exception.PaginationException;
 import ru.practicum.shareit.user.exception.EmailUserException;
-import ru.practicum.shareit.user.exception.SameEmailException;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 
 
@@ -25,12 +24,6 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleEmailUserException(EmailUserException e) {
-        return e.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleSameUserException(SameEmailException e) {
         return e.getMessage();
     }
 

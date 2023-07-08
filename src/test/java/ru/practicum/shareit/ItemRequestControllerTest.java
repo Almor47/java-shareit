@@ -8,6 +8,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.request.controller.ItemRequestController;
+import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
+import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
+import ru.practicum.shareit.request.exception.PaginationException;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.service.RequestService;
 
@@ -91,5 +94,54 @@ public class ItemRequestControllerTest {
                 .andExpect(status().isOk());
 
         verify(requestService, times(1)).getRequest(userId, requestId);
+    }
+
+    @SneakyThrows
+    @Test
+    void addRequestWithException() {
+        long userId = 0L;
+        ItemRequest request = new ItemRequest();
+        when(requestService.addRequest(any(ItemRequest.class), anyLong()))
+                .thenThrow(new BadRequestItemRequestException("Запрос не может иметь пустое описание"));
+
+        mvc.perform(post("/requests")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(request))
+                        .header("X-Sharer-User-Id", userId))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @SneakyThrows
+    @Test
+    void getRequestWithException() {
+        long userId = 0L;
+        long requestId = 0L;
+
+        when(requestService.getRequest(anyLong(), anyLong()))
+                .thenThrow(new NotFoundItemRequestException("Запрос не найден"));
+
+        mvc.perform(get("/requests/{requestId}", requestId)
+                        .header("X-Sharer-User-Id", userId))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @SneakyThrows
+    @Test
+    void getOtherRequestWithException() {
+        long userId = 0L;
+        int from = 0;
+        int size = 32;
+
+        when(requestService.getOtherRequest(anyLong(), anyInt(), anyInt()))
+                .thenThrow(new PaginationException("Ошибка пагинации"));
+
+        mvc.perform(get("/requests/all")
+                        .header("X-Sharer-User-Id", userId)
+                        .param("from", String.valueOf(from))
+                        .param("size", String.valueOf(size)))
+                .andExpect(status().isBadRequest());
+
     }
 }

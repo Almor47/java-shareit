@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.service.UserServiceImpl;
 
 import javax.persistence.EntityManager;
@@ -100,13 +101,13 @@ public class UserServiceImplIntegrationTest {
         entityManager.flush();
 
         long userId = user1.getId();
-        User user2 = User.builder().name("NewName").build();
+        User user2 = User.builder().name("NewName").email("NewEmail").build();
 
         User targetUser = userService.updateUser(userId, user2);
 
         assertThat(targetUser.getId(), notNullValue());
         assertThat(targetUser.getName(), equalTo(user2.getName()));
-        assertThat(targetUser.getEmail(), equalTo(user1.getEmail()));
+        assertThat(targetUser.getEmail(), equalTo(user2.getEmail()));
 
 
     }

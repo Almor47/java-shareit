@@ -10,6 +10,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.booking.controller.BookingController;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.dto.FullBookingDto;
+import ru.practicum.shareit.booking.exception.BadRequestBookingException;
+import ru.practicum.shareit.booking.exception.BookingNotFoundException;
+import ru.practicum.shareit.booking.exception.WrongStateException;
 import ru.practicum.shareit.booking.service.BookingService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -116,6 +119,58 @@ public class BookingControllerTest {
                 .andExpect(status().isOk());
 
         verify(bookingService, times(1)).getAllItemUserBooking(state, userId, from, size);
+    }
+
+    @SneakyThrows
+    @Test
+    void addBookingWithBadRequestException() {
+        BookingDto bookingDto = new BookingDto();
+        long userId = 0L;
+
+        when(bookingService.addBooking(any(BookingDto.class), anyLong()))
+                .thenThrow(BadRequestBookingException.class);
+
+        mvc.perform(post("/bookings")
+                        .header("X-Sharer-User-Id", userId)
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bookingDto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @SneakyThrows
+    @Test
+    void addBookingWithNotFoundException() {
+        BookingDto bookingDto = new BookingDto();
+        long userId = 0L;
+
+        when(bookingService.addBooking(any(BookingDto.class), anyLong()))
+                .thenThrow(BookingNotFoundException.class);
+
+        mvc.perform(post("/bookings")
+                        .header("X-Sharer-User-Id", userId)
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(bookingDto)))
+                .andExpect(status().isNotFound());
+    }
+
+    @SneakyThrows
+    @Test
+    void getAllItemUserBookingWithException() {
+        String state = "ALL";
+        long userId = 0L;
+        Integer from = 0;
+        Integer size = 32;
+
+        when(bookingService.getAllItemUserBooking(anyString(), anyLong(),
+                anyInt(), anyInt()))
+                .thenThrow(WrongStateException.class);
+
+        mvc.perform(get("/bookings/owner")
+                        .header("X-Sharer-User-Id", userId)
+                        .param("from", String.valueOf(from))
+                        .param("size", String.valueOf(size))
+                        .param("state", state))
+                .andExpect(status().isBadRequest());
     }
 
 

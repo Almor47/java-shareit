@@ -6,11 +6,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
+import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
+import ru.practicum.shareit.request.exception.PaginationException;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.RequestRepository;
 import ru.practicum.shareit.request.service.RequestServiceImpl;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -63,4 +67,54 @@ public class ItemRequestServiceImplTest {
         ItemRequest actualItemRequest = requestService.addRequest(itemRequest, userId);
         assertEquals(itemRequest, actualItemRequest);
     }
+
+    @Test
+    void getRequest_whenNotFound_thenThrowNotFountItemRequestException() {
+        long userId = 0L;
+        long requestId = 0L;
+
+        when(requestRepository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+
+        assertThrows(NotFoundItemRequestException.class, () ->
+                requestService.getRequest(userId, requestId));
+    }
+
+    @Test
+    void getOtherRequest_whenBellowFromZero_thenThrowPaginationException() {
+        long userId = 0L;
+        int from = -2;
+        int size = 32;
+
+        assertThrows(PaginationException.class, () ->
+                requestService.getOtherRequest(userId, from, size));
+
+
+    }
+
+    @Test
+    void getOtherRequest_whenBellowSizeZero_thenThrowPaginationException() {
+        long userId = 0L;
+        int from = 0;
+        int size = -32;
+
+        assertThrows(PaginationException.class, () ->
+                requestService.getOtherRequest(userId, from, size));
+
+
+    }
+
+    @Test
+    void getOtherRequest_whenSizeAndFromZero_thenThrowPaginationException() {
+        long userId = 0L;
+        int from = 0;
+        int size = 0;
+
+        assertThrows(PaginationException.class, () ->
+                requestService.getOtherRequest(userId, from, size));
+
+
+    }
+
+
 }

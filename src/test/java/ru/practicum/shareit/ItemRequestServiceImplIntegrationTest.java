@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.RequestRepository;
@@ -15,6 +16,7 @@ import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -65,6 +67,12 @@ public class ItemRequestServiceImplIntegrationTest {
                 .build();
         entityManager.persist(userToSave);
 
+        User userToSave2 = User.builder()
+                .name("Oleg")
+                .email("oleg@yandex.ru")
+                .build();
+        entityManager.persist(userToSave2);
+
         ItemRequest itemRequestToSave1 = ItemRequest.builder()
                 .description("Старый телевизор ЧБ")
                 .requestor(userToSave.getId())
@@ -73,11 +81,21 @@ public class ItemRequestServiceImplIntegrationTest {
         entityManager.persist(itemRequestToSave1);
 
         ItemRequest itemRequestToSave2 = ItemRequest.builder()
-                .description("Вентилятор")
+                .description("Вентилятор огонь")
                 .requestor(userToSave.getId())
                 .created(LocalDateTime.now())
                 .build();
         entityManager.persist(itemRequestToSave2);
+
+        Item itemToSave = Item.builder()
+                .name("Вентилятор")
+                .requestId(itemRequestToSave2.getId())
+                .description("Вентилятор огонь")
+                .available(true)
+                .owner(userToSave2.getId())
+                .comment(new ArrayList<>())
+                .build();
+        entityManager.persist(itemToSave);
 
         List<ItemRequestDto> targetRequests =
                 requestService.getOwnRequest(userToSave.getId());
@@ -144,6 +162,22 @@ public class ItemRequestServiceImplIntegrationTest {
                 .created(LocalDateTime.now())
                 .build();
         entityManager.persist(itemRequestToSave1);
+
+        User userToSave2 = User.builder()
+                .name("Oleg")
+                .email("oleg@yandex.ru")
+                .build();
+        entityManager.persist(userToSave2);
+
+        Item itemToSave = Item.builder()
+                .name("Телевизор")
+                .requestId(itemRequestToSave1.getId())
+                .description("Старый телевизор ЧБ")
+                .available(true)
+                .owner(userToSave2.getId())
+                .comment(new ArrayList<>())
+                .build();
+        entityManager.persist(itemToSave);
 
         ItemRequestDto targetRequest =
                 requestService.getRequest(userToSave1.getId(), itemRequestToSave1.getId());

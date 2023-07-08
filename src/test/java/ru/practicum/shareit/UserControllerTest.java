@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.user.controller.UserController;
+import ru.practicum.shareit.user.exception.EmailUserException;
+import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
 
@@ -108,5 +110,32 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
 
         verify(userService, times(1)).updateUser(userId,userToUpdate);
+    }
+
+    @SneakyThrows
+    @Test
+    void saveNewUserWithException() {
+
+        when(userService.addUser(any(User.class)))
+                .thenThrow(new EmailUserException("У пользователя пустая почта"));
+
+        mvc.perform(post("/users")
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(new User())))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @SneakyThrows
+    @Test
+    void getUserByIdWithException() {
+        long userId = 0L;
+
+        when(userService.getUserById(anyLong()))
+                .thenThrow(new UserNotFoundException("Пользователь не найден"));
+
+        mvc.perform(get("/users/{userId}", userId))
+                .andExpect(status().isNotFound());
+
     }
 }

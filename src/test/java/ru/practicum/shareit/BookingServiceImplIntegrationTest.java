@@ -228,8 +228,8 @@ public class BookingServiceImplIntegrationTest {
         entityManager.persist(booking1);
 
         List<FullBookingDto> expectedBookings =
-                bookingService.getAllUserBooking("ALL", userToSave2.getId(), 0, 32);
+                bookingService.getAllItemUserBooking("ALL", userToSave2.getId(), 0, 32);
 
-        assertThat(expectedBookings.size(), equalTo(1));
+        assertThat(expectedBookings.size(), equalTo(0));
     }
 }

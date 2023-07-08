@@ -8,11 +8,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.exception.BadRequestCommentException;
 import ru.practicum.shareit.item.exception.BadRequestItemException;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
+import ru.practicum.shareit.item.exception.UpdateWithoutXSharerException;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.service.ItemServiceImpl;
+import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserServiceImpl;
 
@@ -38,6 +43,9 @@ public class ItemServiceTest {
 
     @Mock
     private BookingRepository bookingRepository;
+
+    @Mock
+    private CommentRepository commentRepository;
 
     @InjectMocks
     private ItemServiceImpl itemService;
@@ -76,6 +84,66 @@ public class ItemServiceTest {
     }
 
     @Test
+    void addItem_whenNotValidUserId_thenThrowsException() {
+        Item item = new Item();
+        Long userId = null;
+
+        assertThrows(UserNotFoundException.class, () ->
+                itemService.addItem(item, userId));
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void addItem_whenNotValidName_thenThrowsException() {
+        Item item = Item.builder()
+                .name(null)
+                .description("классный сундук")
+                .available(true)
+                .build();
+        Long userId = 0L;
+
+        assertThrows(BadRequestItemException.class, () ->
+                itemService.addItem(item, userId));
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void addItem_whenNotValidDescription_thenThrowsException() {
+        Item item = Item.builder()
+                .name("сундук")
+                .description(null)
+                .available(true)
+                .build();
+        Long userId = 0L;
+
+        assertThrows(BadRequestItemException.class, () ->
+                itemService.addItem(item, userId));
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void addItem_whenNotValidUser_thenThrowsException() {
+        Item item = Item.builder()
+                .name("сундук")
+                .description("Классный сундук")
+                .available(true)
+                .build();
+        Long userId = 0L;
+
+        when(userService.getUserById(anyLong()))
+                .thenReturn(null);
+
+        assertThrows(UserNotFoundException.class, () ->
+                itemService.addItem(item, userId));
+
+        verify(itemRepository, never()).save(item);
+    }
+
+
+    @Test
     void getItemById_whenItemFound_thenReturnItem() {
         long itemId = 0L;
         long userId = 0L;
@@ -108,11 +176,61 @@ public class ItemServiceTest {
     void getItemById_whenItemNotFound_thenReturnNotFoundException() {
         long itemId = 0L;
         long userId = 0L;
+
         when(itemRepository.findById(itemId)).thenThrow(
                 new ItemNotFoundException("Предмет с id " + itemId + "не найден"));
 
         assertThrows(ItemNotFoundException.class,
                 () -> itemService.getItemById(itemId, userId));
 
+    }
+
+    @Test
+    void updateItem_whenUserIdNull_thenReturnUpdateWithoutXSharerException() {
+        Long userId = null;
+        long itemId = 0L;
+
+        Item item = Item.builder()
+                .name("сундук")
+                .description("классный сундук")
+                .available(true)
+                .build();
+
+        assertThrows(UpdateWithoutXSharerException.class, () ->
+                itemService.updateItem(item,userId,itemId));
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void updateItem_whenUserNotFound_thenThrowException() {
+        long userId = 0L;
+        long itemId = 0L;
+
+        Item item = Item.builder()
+                .name("сундук")
+                .description("классный сундук")
+                .available(true)
+                .build();
+
+        when(userService.getUserById(userId)).thenReturn(null);
+
+        assertThrows(UserNotFoundException.class, () ->
+                itemService.updateItem(item,userId,itemId));
+
+        verify(itemRepository, never()).save(item);
+    }
+
+    @Test
+    void addComment_whenCommentEmpty_thenReturnBadRequestCommentException() {
+        long userId = 0L;
+        long itemId = 0L;
+
+        Comment comment = new Comment();
+
+        assertThrows(BadRequestCommentException.class, () ->
+                itemService.addComment(comment,userId,itemId));
+
+        verify(commentRepository, never()).save(comment);
     }
 }

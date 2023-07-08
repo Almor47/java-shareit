@@ -41,11 +41,12 @@ public class UserServiceImplTest {
     @Test
     void getUserById_whenUserNotFound_thenReturnNotFoundException() {
         long userId = 0L;
-        when(userRepository.findById(userId)).thenThrow(
-                new UserNotFoundException("Пользователь с id: " + userId + " не найден"));
+
+        when(userRepository.findById(userId)).
+                thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class,
-                () -> userService.getUserById(0L));
+                () -> userService.getUserById(userId));
 
     }
 
