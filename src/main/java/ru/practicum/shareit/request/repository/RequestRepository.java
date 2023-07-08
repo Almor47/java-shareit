@@ -11,6 +11,7 @@ import java.util.List;
 public interface RequestRepository extends JpaRepository<ItemRequest,Long> {
 
     List<ItemRequest> getAllByRequestorOrderByIdDesc(Long userId);
-    List<ItemRequest> findAllByIdNot(Long userId, Pageable page);
+
+    List<ItemRequest> findAllByRequestorNot(Long userId, Pageable page);
 
 }

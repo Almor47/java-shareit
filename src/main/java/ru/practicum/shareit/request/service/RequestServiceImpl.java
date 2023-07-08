@@ -54,7 +54,7 @@ public class RequestServiceImpl implements RequestService {
         checkPagination(from,size);
         Sort rule = Sort.by(Sort.Direction.DESC, "created");
         Pageable page = PageRequest.of(from / size, size, rule);
-        List<ItemRequest> itemRequests = requestRepository.findAllByIdNot(userId, page);
+        List<ItemRequest> itemRequests = requestRepository.findAllByRequestorNot(userId, page);
         List<Long> itemRequestId = getItemRequestId(itemRequests);
         List<Item> items = itemRepository.findAllByRequestIdIn(itemRequestId);
         return RequestMapper.ListItemRequestToItemRequestDto(itemRequests, items);
