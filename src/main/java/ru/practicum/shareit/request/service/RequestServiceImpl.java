@@ -46,7 +46,7 @@ public class RequestServiceImpl implements RequestService {
         List<ItemRequest> itemRequests = requestRepository.getAllByRequestorOrderByIdDesc(userId);
         List<Long> itemRequestId = getItemRequestId(itemRequests);
         List<Item> items = itemRepository.findAllByRequestIdIn(itemRequestId);
-        return RequestMapper.ListItemRequestToItemRequestDto(itemRequests, items);
+        return RequestMapper.listItemRequestToItemRequestDto(itemRequests, items);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RequestServiceImpl implements RequestService {
         List<ItemRequest> itemRequests = requestRepository.findAllByRequestorNot(userId, page);
         List<Long> itemRequestId = getItemRequestId(itemRequests);
         List<Item> items = itemRepository.findAllByRequestIdIn(itemRequestId);
-        return RequestMapper.ListItemRequestToItemRequestDto(itemRequests, items);
+        return RequestMapper.listItemRequestToItemRequestDto(itemRequests, items);
 
     }
 

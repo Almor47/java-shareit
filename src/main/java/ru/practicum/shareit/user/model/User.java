@@ -8,7 +8,9 @@ import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "users", schema = "public")
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

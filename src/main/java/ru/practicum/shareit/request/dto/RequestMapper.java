@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class RequestMapper {
 
-    public static List<ItemRequestDto> ListItemRequestToItemRequestDto(List<ItemRequest> itemRequests, List<Item> items) {
+    public static List<ItemRequestDto> listItemRequestToItemRequestDto(List<ItemRequest> itemRequests, List<Item> items) {
         List<ItemRequestDto> ans = new ArrayList<>();
         for (ItemRequest one : itemRequests) {
             ItemRequestDto itemRequestDto = new ItemRequestDto();
