@@ -54,7 +54,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                                                   Status status, LocalDateTime ldt);
 
     List<Booking> findAllByItemIdInAndStatusNotOrderByStartAsc(List<Long> itemIdList,
-                                                               Status status1, Pageable page);
+                                                               Status status, Pageable page);
 
 
 }

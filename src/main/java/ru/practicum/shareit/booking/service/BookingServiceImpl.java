@@ -18,6 +18,7 @@ import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.pagination.Pagination;
 import ru.practicum.shareit.request.service.RequestServiceImpl;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
@@ -37,6 +38,7 @@ public class BookingServiceImpl implements BookingService {
     private final UserService userService;
     private final ItemService itemService;
     private final RequestServiceImpl requestService;
+    private final Pagination pagination;
 
 
     @Transactional
@@ -78,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
         if (item.getUser().getId() != userId) {
             throw new BookingNotFoundException("Пользователь с id " + userId + " не является владельцем вещи");
         }
-        if (booking.getStatus() == Status.APPROVED) {
+        if (Status.APPROVED.equals(booking.getStatus())) {
             throw new BadRequestBookingException("Бронирование уже подтверждено");
         }
         Status status;
@@ -111,7 +113,7 @@ public class BookingServiceImpl implements BookingService {
     public List<FullBookingDto> getAllUserBooking(String state, Long userId, Integer from, Integer size) {
         User user = userService.getUserById(userId);
         Sort rule = Sort.by(Sort.Direction.DESC, "start");
-        requestService.checkPagination(from,size);
+        pagination.checkPagination(from,size);
         if (State.ALL.name().equals(state)) {
             Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
             return bookingRepository.findAllByBookerId(userId, page)
@@ -165,7 +167,7 @@ public class BookingServiceImpl implements BookingService {
         } catch (IllegalArgumentException e) {
             throw new WrongStateException(String.format("Unknown state: %s", states));
         }
-        requestService.checkPagination(from,size);
+        pagination.checkPagination(from,size);
         Pageable page = PageRequest.of(from / size, size);
         userService.getUserById(userId);
         return bookingRepository.findAllByOwnerId(userId, String.valueOf(state),

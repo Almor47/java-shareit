@@ -21,6 +21,7 @@ import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.pagination.Pagination;
 import ru.practicum.shareit.request.service.RequestServiceImpl;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
@@ -42,6 +43,7 @@ public class ItemServiceImpl implements ItemService {
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
     private final RequestServiceImpl requestService;
+    private final Pagination pagination;
 
     @Transactional
     @Override
@@ -106,7 +108,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> getUserItem(Long userId, Integer from, Integer size) {
-        requestService.checkPagination(from,size);
+        pagination.checkPagination(from,size);
         Pageable page = PageRequest.of(from / size, size);
         List<Item> itemList = itemRepository.findAllByOwner(userId,page);
         List<Long> itemIdList = new ArrayList<>();
@@ -157,7 +159,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> searchItem(String text, Integer from, Integer size) {
-        requestService.checkPagination(from,size);
+        pagination.checkPagination(from,size);
         Pageable page = PageRequest.of(from / size, size);
         if (text == null || text.isEmpty()) {
             return new ArrayList<>();

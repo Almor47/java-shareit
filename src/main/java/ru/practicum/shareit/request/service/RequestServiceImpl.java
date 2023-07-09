@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.pagination.Pagination;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dto.RequestMapper;
 import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
 import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
-import ru.practicum.shareit.request.exception.PaginationException;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.RequestRepository;
 import ru.practicum.shareit.user.service.UserService;
@@ -28,6 +28,7 @@ public class RequestServiceImpl implements RequestService {
     private final RequestRepository requestRepository;
     private final UserService userService;
     private final ItemRepository itemRepository;
+    private final Pagination pagination;
 
     @Transactional
     @Override
@@ -51,7 +52,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<ItemRequestDto> getOtherRequest(Long userId, Integer from, Integer size) {
-        checkPagination(from,size);
+        pagination.checkPagination(from, size);
         Sort rule = Sort.by(Sort.Direction.DESC, "created");
         Pageable page = PageRequest.of(from / size, size, rule);
         List<ItemRequest> itemRequests = requestRepository.findAllByRequestorNot(userId, page);
@@ -71,19 +72,6 @@ public class RequestServiceImpl implements RequestService {
         return RequestMapper.itemRequestToItemRequestDto(itemRequest, items);
     }
 
-    public void checkPagination(Integer from, Integer size) {
-        if (from < 0) {
-            throw new PaginationException("Индекс первого элемента не может быть отрицательным");
-        }
-        if (size < 0) {
-            throw new PaginationException("Количество элементов для отображения " +
-                    "не может быть отрицательным");
-        }
-        if (from == 0 && size == 0) {
-            throw new PaginationException("Индекс первого элемента и количество элементов для отображения " +
-                    "не могут быть равны 0");
-        }
-    }
 
     private List<Long> getItemRequestId(List<ItemRequest> itemRequests) {
         List<Long> itemRequestId = new ArrayList<>();

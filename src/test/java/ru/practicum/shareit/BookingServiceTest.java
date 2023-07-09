@@ -17,6 +17,7 @@ import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.booking.service.BookingServiceImpl;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemServiceImpl;
+import ru.practicum.shareit.pagination.Pagination;
 import ru.practicum.shareit.request.service.RequestServiceImpl;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserServiceImpl;
@@ -43,6 +44,9 @@ public class BookingServiceTest {
 
     @Mock
     private RequestServiceImpl requestService;
+
+    @Mock
+    private Pagination pagination;
 
     @InjectMocks
     private BookingServiceImpl bookingService;

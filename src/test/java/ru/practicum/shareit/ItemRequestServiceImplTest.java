@@ -5,6 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.pagination.Pagination;
 import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
 import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
 import ru.practicum.shareit.request.exception.PaginationException;
@@ -29,6 +31,9 @@ public class ItemRequestServiceImplTest {
 
     @Mock
     private RequestRepository requestRepository;
+
+    @Mock
+    private Pagination pagination;
 
     @InjectMocks
     private RequestServiceImpl requestService;
@@ -86,6 +91,8 @@ public class ItemRequestServiceImplTest {
         int from = -2;
         int size = 32;
 
+        doThrow(PaginationException.class).when(pagination).checkPagination(from,size);
+
         assertThrows(PaginationException.class, () ->
                 requestService.getOtherRequest(userId, from, size));
 
@@ -98,6 +105,8 @@ public class ItemRequestServiceImplTest {
         int from = 0;
         int size = -32;
 
+        doThrow(PaginationException.class).when(pagination).checkPagination(from,size);
+
         assertThrows(PaginationException.class, () ->
                 requestService.getOtherRequest(userId, from, size));
 
@@ -109,6 +118,8 @@ public class ItemRequestServiceImplTest {
         long userId = 0L;
         int from = 0;
         int size = 0;
+
+        doThrow(PaginationException.class).when(pagination).checkPagination(from,size);
 
         assertThrows(PaginationException.class, () ->
                 requestService.getOtherRequest(userId, from, size));
