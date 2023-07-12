@@ -1,6 +1,8 @@
 package ru.practicum.shareit.item.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.enumerated.Status;
@@ -19,6 +21,8 @@ import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
+import ru.practicum.shareit.pagination.Pagination;
+import ru.practicum.shareit.request.service.RequestServiceImpl;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
@@ -38,6 +42,8 @@ public class ItemServiceImpl implements ItemService {
     private final UserService userService;
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
+    private final RequestServiceImpl requestService;
+    private final Pagination pagination;
 
     @Transactional
     @Override
@@ -101,15 +107,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> getUserItem(Long userId) {
-
-        List<Item> itemList = itemRepository.findAllByOwner(userId);
+    public List<ItemDto> getUserItem(Long userId, Integer from, Integer size) {
+        pagination.checkPagination(from,size);
+        Pageable page = PageRequest.of(from / size, size);
+        List<Item> itemList = itemRepository.findAllByOwner(userId,page);
         List<Long> itemIdList = new ArrayList<>();
         for (Item one : itemList) {
             itemIdList.add(one.getId());
         }
         List<Booking> bookings = bookingRepository.findAllByItemIdInAndStatusNotOrderByStartAsc(itemIdList,
-                Status.REJECTED);
+                Status.REJECTED,page);
         Map<Long, Booking> lastBookings = new HashMap<>();
         LocalDateTime ldt = LocalDateTime.now();
         for (Booking one : bookings) {
@@ -123,7 +130,6 @@ public class ItemServiceImpl implements ItemService {
             if (lastBookings.get(one.getItemId()).getStart().isBefore(one.getStart())
                     && one.getStart().isBefore(ldt)) {
                 lastBookings.put(one.getItemId(), one);
-                System.out.println(lastBookings.get(one.getItemId()));
             }
         }
         Map<Long, Booking> nextBookings = new HashMap<>();
@@ -152,11 +158,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> searchItem(String text) {
+    public List<Item> searchItem(String text, Integer from, Integer size) {
+        pagination.checkPagination(from,size);
+        Pageable page = PageRequest.of(from / size, size);
         if (text == null || text.isEmpty()) {
             return new ArrayList<>();
         }
-        return itemRepository.search(text);
+        return itemRepository.search(text,page);
     }
 
     @Override
@@ -192,4 +200,5 @@ public class ItemServiceImpl implements ItemService {
         }
         return commentsDto;
     }
+
 }

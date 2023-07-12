@@ -1,27 +1,23 @@
 package ru.practicum.shareit.booking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import ru.practicum.shareit.booking.enumerated.Status;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
-
-/**
- * TODO Sprint add-bookings.
- */
 
 @Entity
 @Table(name = "bookings", schema = "public")
 @Getter
 @Setter
 @ToString
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Booking {
 
     @Enumerated(EnumType.STRING)
@@ -29,6 +25,7 @@ public class Booking {
     Status status;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
     @Column(name = "start_date")
     private LocalDateTime start;
@@ -47,16 +44,4 @@ public class Booking {
     @JsonIgnore
     private User user;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

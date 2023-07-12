@@ -7,9 +7,6 @@ import ru.practicum.shareit.booking.model.Booking;
 
 import java.util.List;
 
-/**
- * TODO Sprint add-controllers.
- */
 @Getter
 @Setter
 @ToString

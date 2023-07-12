@@ -1,6 +1,8 @@
 package ru.practicum.shareit.booking.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.pagination.Pagination;
+import ru.practicum.shareit.request.service.RequestServiceImpl;
 import ru.practicum.shareit.user.exception.UserNotFoundException;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
@@ -33,6 +37,8 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final UserService userService;
     private final ItemService itemService;
+    private final RequestServiceImpl requestService;
+    private final Pagination pagination;
 
 
     @Transactional
@@ -74,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
         if (item.getUser().getId() != userId) {
             throw new BookingNotFoundException("Пользователь с id " + userId + " не является владельцем вещи");
         }
-        if (booking.getStatus() == Status.APPROVED) {
+        if (Status.APPROVED.equals(booking.getStatus())) {
             throw new BadRequestBookingException("Бронирование уже подтверждено");
         }
         Status status;
@@ -104,40 +110,46 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<FullBookingDto> getAllUserBooking(String state, Long userId) {
+    public List<FullBookingDto> getAllUserBooking(String state, Long userId, Integer from, Integer size) {
         User user = userService.getUserById(userId);
         Sort rule = Sort.by(Sort.Direction.DESC, "start");
+        pagination.checkPagination(from,size);
         if (State.ALL.name().equals(state)) {
-            return bookingRepository.findAllByBookerId(userId, rule)
+            Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
+            return bookingRepository.findAllByBookerId(userId, page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
         } else if (State.CURRENT.name().equals(state)) {
+            Pageable page = PageRequest.of(from / size, size,Sort.Direction.ASC, "item_id");
             return bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(userId, LocalDateTime.now(),
-                            LocalDateTime.now(),
-                            Sort.by(Sort.Direction.ASC, "item_id"))
+                            LocalDateTime.now(), page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
         } else if (State.PAST.name().equals(state)) {
+            Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
             return bookingRepository.findAllByBookerIdAndEndBefore(userId,
-                            LocalDateTime.now(), rule)
+                            LocalDateTime.now(),page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
         } else if (State.FUTURE.name().equals(state)) {
+            Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
             return bookingRepository.findAllByBookerIdAndStartAfter(userId,
-                            LocalDateTime.now(), rule)
+                            LocalDateTime.now(), page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
         } else if (State.WAITING.name().equals(state)) {
-            return bookingRepository.findAllByBookerIdAndStatus(userId, Status.WAITING, rule)
+            Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
+            return bookingRepository.findAllByBookerIdAndStatus(userId, Status.WAITING, page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
         } else if (State.REJECTED.name().equals(state)) {
-            return bookingRepository.findAllByBookerIdAndStatus(userId, Status.REJECTED, rule)
+            Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
+            return bookingRepository.findAllByBookerIdAndStatus(userId, Status.REJECTED, page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
@@ -148,16 +160,18 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<FullBookingDto> getAllItemUserBooking(String states, Long userId) {
+    public List<FullBookingDto> getAllItemUserBooking(String states, Long userId, Integer from, Integer size) {
         State state;
         try {
             state = State.valueOf(states);
         } catch (IllegalArgumentException e) {
             throw new WrongStateException(String.format("Unknown state: %s", states));
         }
-        User user = userService.getUserById(userId);
+        pagination.checkPagination(from,size);
+        Pageable page = PageRequest.of(from / size, size);
+        userService.getUserById(userId);
         return bookingRepository.findAllByOwnerId(userId, String.valueOf(state),
-                        LocalDateTime.now())
+                        LocalDateTime.now(), page)
                 .stream()
                 .map(booking -> BookingMapper.mapToFullBooking(booking,
                         booking.getUser(), booking.getItem()))
