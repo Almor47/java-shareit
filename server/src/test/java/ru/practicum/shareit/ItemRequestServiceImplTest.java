@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.pagination.Pagination;
-import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
 import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
 import ru.practicum.shareit.request.exception.PaginationException;
 import ru.practicum.shareit.request.model.ItemRequest;
@@ -36,23 +35,6 @@ public class ItemRequestServiceImplTest {
 
     @InjectMocks
     private RequestServiceImpl requestService;
-
-    @Test
-    void addItemRequest_whenDescriptionEmpty_thenReturnBadRequestItemRequestException() {
-        long userId = 0L;
-        ItemRequest itemRequest = new ItemRequest();
-        itemRequest.setDescription(null);
-        User user = new User();
-        user.setEmail("valid@yandex.ru");
-
-        when(userService.getUserById(anyLong()))
-                .thenReturn(user);
-
-        assertThrows(BadRequestItemRequestException.class, () ->
-                requestService.addRequest(itemRequest, userId));
-
-        verify(requestRepository, never()).save(itemRequest);
-    }
 
     @Test
     void addItemRequest_whenValid_thenSaveItemRequest() {

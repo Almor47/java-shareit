@@ -50,12 +50,6 @@ public class ItemServiceImpl implements ItemService {
     public Item addItem(Item item, Long userId) {
         if (userId == null) {
             throw new UserNotFoundException("У предмета отсутствует пользователь");
-        } else if (item.getAvailable() == null) {
-            throw new BadRequestItemException("У предмета отсутствует доступность");
-        } else if (item.getName() == null || item.getName().isEmpty()) {
-            throw new BadRequestItemException("У предмета отсутствует имя");
-        } else if (item.getDescription() == null || item.getDescription().isEmpty()) {
-            throw new BadRequestItemException("У предмета отсутствует описание");
         } else if (userService.getUserById(userId) == null) {
             throw new UserNotFoundException("Пользователя с таким id " + userId + " не существует");
         }
@@ -175,9 +169,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     public CommentDto addComment(Comment comment, Long userId, Long itemId) {
-        if (comment.getText() == null || comment.getText().isEmpty()) {
-            throw new BadRequestCommentException("У комментария отсутсвует текст");
-        }
         LocalDateTime now = LocalDateTime.now();
         List<Booking> bookings = bookingRepository.findAllByBookerIdAndItemIdAndStatusAndEndBefore(userId, itemId,
                 Status.APPROVED, now);

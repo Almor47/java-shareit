@@ -8,11 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.exception.BadRequestCommentException;
-import ru.practicum.shareit.item.exception.BadRequestItemException;
 import ru.practicum.shareit.item.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.exception.UpdateWithoutXSharerException;
-import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentRepository;
 import ru.practicum.shareit.item.repository.ItemRepository;
@@ -73,52 +70,11 @@ public class ItemServiceTest {
     }
 
     @Test
-    void addItem_whenNotValid_thenThrowsException() {
-        Item item = new Item();
-        Long userId = 0L;
-
-        assertThrows(BadRequestItemException.class, () ->
-                itemService.addItem(item, userId));
-
-        verify(itemRepository, never()).save(item);
-    }
-
-    @Test
     void addItem_whenNotValidUserId_thenThrowsException() {
         Item item = new Item();
         Long userId = null;
 
         assertThrows(UserNotFoundException.class, () ->
-                itemService.addItem(item, userId));
-
-        verify(itemRepository, never()).save(item);
-    }
-
-    @Test
-    void addItem_whenNotValidName_thenThrowsException() {
-        Item item = Item.builder()
-                .name(null)
-                .description("классный сундук")
-                .available(true)
-                .build();
-        Long userId = 0L;
-
-        assertThrows(BadRequestItemException.class, () ->
-                itemService.addItem(item, userId));
-
-        verify(itemRepository, never()).save(item);
-    }
-
-    @Test
-    void addItem_whenNotValidDescription_thenThrowsException() {
-        Item item = Item.builder()
-                .name("сундук")
-                .description(null)
-                .available(true)
-                .build();
-        Long userId = 0L;
-
-        assertThrows(BadRequestItemException.class, () ->
                 itemService.addItem(item, userId));
 
         verify(itemRepository, never()).save(item);
@@ -221,16 +177,4 @@ public class ItemServiceTest {
         verify(itemRepository, never()).save(item);
     }
 
-    @Test
-    void addComment_whenCommentEmpty_thenReturnBadRequestCommentException() {
-        long userId = 0L;
-        long itemId = 0L;
-
-        Comment comment = new Comment();
-
-        assertThrows(BadRequestCommentException.class, () ->
-                itemService.addComment(comment,userId,itemId));
-
-        verify(commentRepository, never()).save(comment);
-    }
 }

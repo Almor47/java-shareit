@@ -1,3 +1,4 @@
+/*
 package ru.practicum.shareit.booking.exception;
 
 public class WrongStateException extends RuntimeException {
@@ -6,3 +7,4 @@ public class WrongStateException extends RuntimeException {
         super(message);
     }
 }
+*/

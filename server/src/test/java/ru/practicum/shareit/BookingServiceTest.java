@@ -11,7 +11,6 @@ import ru.practicum.shareit.booking.dto.FullBookingDto;
 import ru.practicum.shareit.booking.enumerated.Status;
 import ru.practicum.shareit.booking.exception.BadRequestBookingException;
 import ru.practicum.shareit.booking.exception.BookingNotFoundException;
-import ru.practicum.shareit.booking.exception.WrongStateException;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.booking.service.BookingServiceImpl;
@@ -206,17 +205,6 @@ public class BookingServiceTest {
         assertEquals(ans.size(), expectedBooking.size());
 
 
-    }
-
-    @Test
-    void getAllItemUserBooking_whenStateInvalid_thenThrowException() {
-        String states = "test";
-        long userId = 0L;
-        int from = 0;
-        int size = 32;
-
-        assertThrows(WrongStateException.class, () ->
-                bookingService.getAllItemUserBooking(states, userId, from, size));
     }
 
     @Test

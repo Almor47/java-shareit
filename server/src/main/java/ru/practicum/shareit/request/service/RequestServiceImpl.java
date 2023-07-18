@@ -34,9 +34,6 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public ItemRequest addRequest(ItemRequest request, Long userId) {
         userService.getUserById(userId);
-        if (request.getDescription() == null) {
-            throw new BadRequestItemRequestException("Запрос не может иметь пустое описание");
-        }
         request.setRequestor(userId);
         return requestRepository.save(request);
     }

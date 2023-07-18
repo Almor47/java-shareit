@@ -1,4 +1,4 @@
-package ru.practicum.shareit.handler;
+/*package ru.practicum.shareit.handler;
 
 import lombok.Getter;
 
@@ -11,4 +11,4 @@ public class ErrorResponse {
         this.error = error;
     }
 
-}
+}*/

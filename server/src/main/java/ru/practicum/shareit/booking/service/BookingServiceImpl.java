@@ -13,7 +13,6 @@ import ru.practicum.shareit.booking.enumerated.State;
 import ru.practicum.shareit.booking.enumerated.Status;
 import ru.practicum.shareit.booking.exception.BadRequestBookingException;
 import ru.practicum.shareit.booking.exception.BookingNotFoundException;
-import ru.practicum.shareit.booking.exception.WrongStateException;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.item.model.Item;
@@ -147,27 +146,19 @@ public class BookingServiceImpl implements BookingService {
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else if (State.REJECTED.name().equals(state)) {
+        }
             Pageable page = PageRequest.of(from / size, size, Sort.Direction.DESC, "start");
             return bookingRepository.findAllByBookerIdAndStatus(userId, Status.REJECTED, page)
                     .stream()
                     .map(booking -> BookingMapper.mapToFullBooking(booking, user, booking.getItem()))
                     .collect(Collectors.toList());
-        } else {
-            throw new WrongStateException(String.format("Unknown state: %s", state));
-        }
 
     }
 
     @Override
     public List<FullBookingDto> getAllItemUserBooking(String states, Long userId, Integer from, Integer size) {
-        State state;
-        try {
-            state = State.valueOf(states);
-        } catch (IllegalArgumentException e) {
-            throw new WrongStateException(String.format("Unknown state: %s", states));
-        }
-        pagination.checkPagination(from,size);
+        State state = State.valueOf(states);
+        pagination.checkPagination(from, size);
         Pageable page = PageRequest.of(from / size, size);
         userService.getUserById(userId);
         return bookingRepository.findAllByOwnerId(userId, String.valueOf(state),
