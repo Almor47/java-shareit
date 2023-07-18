@@ -11,7 +11,6 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.pagination.Pagination;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.dto.RequestMapper;
-import ru.practicum.shareit.request.exception.BadRequestItemRequestException;
 import ru.practicum.shareit.request.exception.NotFoundItemRequestException;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.request.repository.RequestRepository;
