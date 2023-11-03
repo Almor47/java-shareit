@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/product-profile.dtd">
+
+<instance-profile id="t"
+                 name="test"
+                 start-page="Empty-MD-Topic.md">
+
+  <toc-element topic="Starter.md"/>
+  <toc-element topic="Empty-MD-Topic.md"/>
+  <toc-element topic="starter-topic.md"/>
+  <toc-element topic="How-to.md"/>
+  <toc-element topic="Overview.md"/>
+  <toc-element topic="Tutorial.md"/>
+  <toc-element topic="Reference.md"/>
+</instance-profile>

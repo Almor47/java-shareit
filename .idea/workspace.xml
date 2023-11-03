@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="17a0b7f0-cd71-44b6-aa5a-681928c9c880" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Writerside/c.list" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/cfg/buildprofiles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/project.ihp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/t.tree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/Empty-MD-Topic.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/How-to.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/Overview.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/Reference.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/Starter.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/Tutorial.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/topics/starter-topic.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Writerside/v.list" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/ru/practicum/shareit/handler/ErrorHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/ru/practicum/shareit/handler/ErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/ru/practicum/shareit/handler/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/ru/practicum/shareit/handler/ErrorResponse.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="onto" value="4fddb5c04666618d035ba9d1572d9034b4fe8bff" />
+  </component>
+  <component name="InstanceColorv3">
+    <option name="map">
+      <map>
+        <entry key="t.tree">
+          <value>
+            <ColorState>
+              <option name="customOrder" value="1" />
+              <option name="first">
+                <RgbState>
+                  <option name="blue" value="60" />
+                  <option name="darkBlue" value="60" />
+                  <option name="darkGreen" value="68" />
+                  <option name="darkRed" value="206" />
+                  <option name="green" value="68" />
+                  <option name="red" value="206" />
+                </RgbState>
+              </option>
+              <option name="second">
+                <RgbState>
+                  <option name="blue" value="65" />
+                  <option name="darkBlue" value="65" />
+                  <option name="darkGreen" value="126" />
+                  <option name="darkRed" value="231" />
+                  <option name="green" value="126" />
+                  <option name="red" value="231" />
+                </RgbState>
+              </option>
+            </ColorState>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2R0MAT7AN2juaGPVw17fkem27Uc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "add-docker",
+    "jdk.selected.JAVA_MODULE": "corretto-11",
+    "last_opened_file_path": "C:/Users/Sasha/dev/java-shareit",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "fileTemplates",
+    "spring.configuration.checksum": "d0e10b23dcc91d60e78af963a063c22b",
+    "vue.rearranger.settings.migration": "true",
+    "writerside.last.selected.productjava-shareit": "t"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "h2",
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Sasha\dev\java-shareit\gateway" />
+      <recent name="C:\Users\Sasha\dev\java-shareit\server\src\main" />
+      <recent name="C:\Users\Sasha\dev\java-shareit\server\src\main\resources" />
+      <recent name="C:\Users\Sasha\dev\java-shareit\server\src\test" />
+      <recent name="C:\Users\Sasha\dev\java-shareit\gateway\src\main\java\ru\practicum\shareit" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="ru.practicum.shareit.item" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ShareItServer">
+    <configuration name="ShareIt" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="ru.practicum.shareit.ShareItApp" />
+      <module name="shareit" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BookingControllerTest.addBooking" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shareit-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.practicum.shareit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.practicum.shareit" />
+      <option name="MAIN_CLASS_NAME" value="ru.practicum.shareit.BookingControllerTest" />
+      <option name="METHOD_NAME" value="addBooking" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BookingControllerTest.updateBooking" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shareit-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.practicum.shareit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.practicum.shareit" />
+      <option name="MAIN_CLASS_NAME" value="ru.practicum.shareit.BookingControllerTest" />
+      <option name="METHOD_NAME" value="updateBooking" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ItemRequestServiceImplTest.getOtherRequest_whenBellowFromZero_thenThrowPaginationException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shareit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.practicum.shareit.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.practicum.shareit" />
+      <option name="MAIN_CLASS_NAME" value="ru.practicum.shareit.ItemRequestServiceImplTest" />
+      <option name="METHOD_NAME" value="getOtherRequest_whenBellowFromZero_thenThrowPaginationException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="shareit in shareit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shareit" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java/ru/practicum/shareit" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShareItApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="shareit" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.practicum.shareit.ShareItApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShareItGateway" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="shareit-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.practicum.shareit.ShareItGateway" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShareItServer" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="shareit-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.practicum.shareit.ShareItServer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shareit" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ru.practicum.shareit.ShareItApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.ShareItGateway" />
+      <item itemvalue="Application.ShareItServer" />
+      <item itemvalue="Application.ShareIt" />
+      <item itemvalue="JUnit.BookingControllerTest.addBooking" />
+      <item itemvalue="JUnit.BookingControllerTest.updateBooking" />
+      <item itemvalue="JUnit.ItemRequestServiceImplTest.getOtherRequest_whenBellowFromZero_thenThrowPaginationException" />
+      <item itemvalue="JUnit.shareit in shareit" />
+      <item itemvalue="Spring Boot.ShareItApp" />
+      <item itemvalue="Spring Boot.ShareItServer" />
+      <item itemvalue="Spring Boot.ShareItGateway" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BookingControllerTest.updateBooking" />
+        <item itemvalue="JUnit.BookingControllerTest.addBooking" />
+        <item itemvalue="Spring Boot.ShareItGateway" />
+        <item itemvalue="JUnit.shareit in shareit" />
+        <item itemvalue="JUnit.ItemRequestServiceImplTest.getOtherRequest_whenBellowFromZero_thenThrowPaginationException" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17a0b7f0-cd71-44b6-aa5a-681928c9c880" name="Changes" comment="" />
+      <created>1686382401874</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1686382401874</updated>
+      <workItem from="1686382402864" duration="12524000" />
+      <workItem from="1686458399423" duration="184000" />
+      <workItem from="1686458591021" duration="6058000" />
+      <workItem from="1686481647990" duration="761000" />
+      <workItem from="1686482629765" duration="57000" />
+      <workItem from="1686482755830" duration="62000" />
+      <workItem from="1687189996736" duration="11028000" />
+      <workItem from="1687276013073" duration="4332000" />
+      <workItem from="1687280362060" duration="1289000" />
+      <workItem from="1687319409324" duration="616000" />
+      <workItem from="1687364848713" duration="5074000" />
+      <workItem from="1687405354364" duration="1609000" />
+      <workItem from="1687449394423" duration="6535000" />
+      <workItem from="1687491438822" duration="5795000" />
+      <workItem from="1687535355081" duration="1235000" />
+      <workItem from="1687536597252" duration="13237000" />
+      <workItem from="1687589734561" duration="6858000" />
+      <workItem from="1687596786795" duration="26143000" />
+      <workItem from="1687674055925" duration="10597000" />
+      <workItem from="1687684822168" duration="2051000" />
+      <workItem from="1687796756765" duration="1325000" />
+      <workItem from="1687837600330" duration="2188000" />
+      <workItem from="1687923826398" duration="3586000" />
+      <workItem from="1687969202954" duration="11236000" />
+      <workItem from="1687980478564" duration="76000" />
+      <workItem from="1688010307127" duration="599000" />
+      <workItem from="1688054714640" duration="22000" />
+      <workItem from="1688140288090" duration="1107000" />
+      <workItem from="1688200855978" duration="9977000" />
+      <workItem from="1688215622099" duration="10580000" />
+      <workItem from="1688283699885" duration="3562000" />
+      <workItem from="1688305369236" duration="530000" />
+      <workItem from="1688399852617" duration="3997000" />
+      <workItem from="1688442188912" duration="2373000" />
+      <workItem from="1688486020858" duration="4541000" />
+      <workItem from="1688528760303" duration="1888000" />
+      <workItem from="1688572255714" duration="1829000" />
+      <workItem from="1688615062127" duration="1493000" />
+      <workItem from="1688660415884" duration="7620000" />
+      <workItem from="1688701389816" duration="1467000" />
+      <workItem from="1688702983024" duration="2195000" />
+      <workItem from="1688744838319" duration="4437000" />
+      <workItem from="1688749305280" duration="599000" />
+      <workItem from="1688798259698" duration="22404000" />
+      <workItem from="1688826883206" duration="8000" />
+      <workItem from="1688827047616" duration="1123000" />
+      <workItem from="1688894891541" duration="4763000" />
+      <workItem from="1689092791680" duration="16000" />
+      <workItem from="1689351594565" duration="14254000" />
+      <workItem from="1689409679964" duration="4617000" />
+      <workItem from="1689414491158" duration="3452000" />
+      <workItem from="1689418774294" duration="7573000" />
+      <workItem from="1689492254220" duration="7886000" />
+      <workItem from="1689535547000" duration="528000" />
+      <workItem from="1689608297563" duration="877000" />
+      <workItem from="1689609704127" duration="237000" />
+      <workItem from="1689609953011" duration="41000" />
+      <workItem from="1689610001834" duration="8538000" />
+      <workItem from="1689654883132" duration="819000" />
+      <workItem from="1689696627530" duration="4042000" />
+      <workItem from="1689869425120" duration="759000" />
+      <workItem from="1689870193345" duration="712000" />
+      <workItem from="1690174783291" duration="48000" />
+      <workItem from="1690174839553" duration="554000" />
+      <workItem from="1690784715316" duration="16000" />
+      <workItem from="1690787629458" duration="9962000" />
+      <workItem from="1690872139234" duration="10953000" />
+      <workItem from="1690952587808" duration="600000" />
+      <workItem from="1690970573591" duration="2988000" />
+      <workItem from="1690975799309" duration="1212000" />
+      <workItem from="1691036371835" duration="3795000" />
+      <workItem from="1691164877356" duration="736000" />
+      <workItem from="1691216317571" duration="599000" />
+      <workItem from="1691309432080" duration="8121000" />
+      <workItem from="1691396327149" duration="1199000" />
+      <workItem from="1691502243126" duration="14000" />
+      <workItem from="1691572248460" duration="1851000" />
+      <workItem from="1691749094174" duration="2457000" />
+      <workItem from="1691816725794" duration="1486000" />
+      <workItem from="1692013328342" duration="1812000" />
+      <workItem from="1692114574601" duration="608000" />
+      <workItem from="1692340607595" duration="1978000" />
+      <workItem from="1692359164401" duration="347000" />
+      <workItem from="1692515470872" duration="1632000" />
+      <workItem from="1695461754643" duration="31000" />
+      <workItem from="1695461903490" duration="1147000" />
+      <workItem from="1695554542458" duration="17000" />
+      <workItem from="1696612626986" duration="87000" />
+      <workItem from="1697003271159" duration="1722000" />
+      <workItem from="1697010497036" duration="12000" />
+      <workItem from="1698140452624" duration="1059000" />
+      <workItem from="1698157837639" duration="91000" />
+      <workItem from="1698331181632" duration="54000" />
+      <workItem from="1698391573061" duration="169000" />
+      <workItem from="1698391767295" duration="123000" />
+      <workItem from="1698392272333" duration="132000" />
+      <workItem from="1698988860860" duration="1225000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="add-docker" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/java_shareit$shareit_in_shareit.ic" NAME="shareit in shareit Coverage Results" MODIFIED="1688898839067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/java_shareit$shareit_in_shareit_server.ic" NAME="shareit in shareit-server Coverage Results" MODIFIED="1689698893937" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/java_shareit$java_in_shareit.ic" NAME="java in shareit Coverage Results" MODIFIED="1688809751215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/java_shareit$BookingControllerTest.ic" NAME="BookingControllerTest Coverage Results" MODIFIED="1688800100530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ru.practicum.shareit.*</FILTER>
+    </SUITE>
+  </component>
+</project>
